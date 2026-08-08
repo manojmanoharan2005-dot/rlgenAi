@@ -19,13 +19,10 @@ def validate_startup():
     if not settings.API_PREFIX:
         raise ConfigurationException("API_PREFIX environment variable is missing")
         
-    # 3. Verify Folder Structure
-    required_folders = ["api", "core", "config", "middlewares", "exceptions", "services", "utils", "schemas", "models"]
-    
-    # Assuming this runs from backend root
+    # 3. Ensure Folder Structure Exists
+    required_folders = ["api", "core", "config", "middlewares", "exceptions", "services", "utils", "schemas", "models", "logs"]
     for folder in required_folders:
-        if not os.path.isdir(folder):
-            raise ConfigurationException(f"Required folder missing: {folder}/")
+        os.makedirs(folder, exist_ok=True)
             
     # 4. Check Gemini Key
     if not settings.GEMINI_API_KEY:

@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     ICARUS_VERILOG_PATH: str = "iverilog"
     VVP_PATH: str = "vvp"
     DATABASE_URL: Optional[str] = "postgresql://postgres:postgres@localhost:5432/rtlgen"
+    CORS_ORIGINS: str = "*"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

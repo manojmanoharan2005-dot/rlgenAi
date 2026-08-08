@@ -14,6 +14,15 @@ def resolve_executable(cmd_setting: str) -> Optional[str]:
     if not cmd_setting:
         return None
 
+    # On non-Windows platforms (e.g. Linux/Render), strip Windows drive letters or absolute paths
+    if os.name != 'nt' and (":" in cmd_setting or "\\" in cmd_setting):
+        binary_basename = os.path.basename(cmd_setting.replace("\\", "/"))
+        if binary_basename.lower().endswith(".exe"):
+            binary_basename = binary_basename[:-4]
+        found = shutil.which(binary_basename)
+        if found:
+            return found
+
     # Check if direct absolute file path exists
     if os.path.isabs(cmd_setting) or os.sep in cmd_setting or "/" in cmd_setting:
         if os.path.exists(cmd_setting) and os.path.isfile(cmd_setting):
