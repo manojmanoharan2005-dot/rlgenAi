@@ -116,17 +116,6 @@ async def generate_testbench(request: TestbenchRequest):
 
 @router.post(f"{settings.API_PREFIX}/generate", response_model=GenerateResponse)
 async def generate_rtl(request: GenerateRequest):
-    # Step 4 check: verify compiler availability
-    if not compiler_service.check_installed():
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={
-                "success": False,
-                "stage": "compilation",
-                "error": "Icarus Verilog is not installed or is not available in PATH"
-            }
-        )
-
     prompt = get_rtl_prompt(request.prompt)
     rtl_code = gemini_service.generate_rtl(prompt)
     

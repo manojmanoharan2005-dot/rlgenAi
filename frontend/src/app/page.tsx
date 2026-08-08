@@ -47,7 +47,9 @@ export default function Home() {
     } catch (err) {
       console.error(err);
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.detail || err.message || "An error occurred during generation");
+        const data = err.response?.data;
+        const msg = data?.error || data?.detail || data?.message || err.message || "An error occurred during generation";
+        setError(`Generation failed: ${msg}`);
       } else if (err instanceof Error) {
         setError(err.message);
       } else {
