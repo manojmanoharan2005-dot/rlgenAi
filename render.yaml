@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: rlgenai-backend
+    env: python
+    buildCommand: "./render-build.sh"
+    startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: ICARUS_VERILOG_PATH
+        value: iverilog
+      - key: VVP_PATH
+        value: vvp
