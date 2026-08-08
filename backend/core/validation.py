@@ -7,16 +7,20 @@ if backend_dir not in sys.path:
     sys.path.insert(0, backend_dir)
 
 try:
-    from config.settings import settings
+    from backend.config.settings import settings
 except ImportError:
-    from ..config.settings import settings
+    from config.settings import settings
 
 try:
-    from exceptions.custom import ConfigurationException
+    from backend.exceptions.custom import ConfigurationException
 except ImportError:
-    from ..exceptions.custom import ConfigurationException
+    from exceptions.custom import ConfigurationException
 
-from services.gemini_service import gemini_service
+try:
+    from backend.services.gemini_service import gemini_service
+except ImportError:
+    from services.gemini_service import gemini_service
+
 
 def validate_startup():
     # 1. Verify Python Version
