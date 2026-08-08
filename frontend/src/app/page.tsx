@@ -30,6 +30,8 @@ export default function Home() {
     };
     
     checkBackend();
+    const interval = setInterval(checkBackend, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleGenerate = async () => {
@@ -74,7 +76,6 @@ export default function Home() {
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 text-transparent bg-clip-text">
               RTLGen AI
             </h1>
-            <p className="text-xs text-zinc-400 font-medium tracking-wider uppercase mt-0.5">Phase 8</p>
           </div>
         </div>
         <div className={`inline-flex items-center px-3 py-1.5 rounded-full border text-xs font-medium transition-colors ${backendStatus === "Backend Online" ? "border-green-500/30 bg-green-500/10 text-green-400" : backendStatus === "Checking..." ? "border-yellow-500/30 bg-yellow-500/10 text-yellow-400" : "border-red-500/30 bg-red-500/10 text-red-400"}`}>
@@ -127,7 +128,7 @@ export default function Home() {
             )}
           </div>
 
-          {/* Phase 8 Progress Tracker */}
+          {/* Progress Tracker */}
           {(isGenerating || response) && (
             <div className="bg-zinc-900/40 border border-zinc-800/50 rounded-2xl p-6 shadow-xl backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h2 className="text-lg font-semibold mb-4 text-zinc-200">Workflow Status</h2>
@@ -240,7 +241,7 @@ export default function Home() {
                 <p className="text-zinc-600">Waiting for job...</p>
               )}
               {isGenerating && (
-                <p className="text-yellow-500/70 animate-pulse">Running workflow phase 8...</p>
+                <p className="text-yellow-500/70 animate-pulse">Running workflow...</p>
               )}
               
               {/* Validation errors */}

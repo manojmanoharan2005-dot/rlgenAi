@@ -6,6 +6,9 @@ from config.settings import settings
 from core.logging import logger
 
 DATABASE_URL = settings.DATABASE_URL or "postgresql://postgres:postgres@localhost:5432/rtlgen"
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 
 try:
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
