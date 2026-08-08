@@ -1,26 +1,10 @@
-import os
 import sys
-
-# Ensure backend directory is in sys.path
-backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if backend_dir not in sys.path:
-    sys.path.insert(0, backend_dir)
-
-try:
-    from backend.config.settings import settings
-except ImportError:
-    from config.settings import settings
-
-try:
-    from backend.exceptions.custom import ConfigurationException
-except ImportError:
-    from exceptions.custom import ConfigurationException
-
-try:
-    from backend.services.gemini_service import gemini_service
-except ImportError:
-    from services.gemini_service import gemini_service
-
+import os
+# pyrefly: ignore [missing-import]
+from config.settings import settings
+# pyrefly: ignore [missing-import]
+from exceptions.custom import ConfigurationException
+from services.gemini_service import gemini_service
 
 def validate_startup():
     # 1. Verify Python Version
