@@ -5,6 +5,7 @@ import axios from "axios";
 import Editor from "@monaco-editor/react";
 import { CheckCircle2, Circle, Loader2, Terminal, Zap, Code2, AlertTriangle, Cpu } from "lucide-react";
 import { GenerateResponse } from "../types";
+import { ENDPOINTS, API_BASE_URL } from "../lib/api";
 
 export default function Home() {
   const [backendStatus, setBackendStatus] = useState<string>("Checking...");
@@ -17,8 +18,7 @@ export default function Home() {
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        const url = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
-        const res = await axios.get(`${url}/health`);
+        const res = await axios.get(ENDPOINTS.HEALTH);
         if (res.data.status === "healthy") {
           setBackendStatus("Backend Online");
         } else {
@@ -42,8 +42,7 @@ export default function Home() {
     setActiveTab("rtl");
     
     try {
-      const url = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
-      const res = await axios.post<GenerateResponse>(`${url}/api/v1/generate`, { prompt });
+      const res = await axios.post<GenerateResponse>(ENDPOINTS.GENERATE, { prompt });
       setResponse(res.data);
     } catch (err) {
       console.error(err);
